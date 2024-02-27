@@ -7,7 +7,7 @@ const jwt = require("jsonwebtoken");
 
 router.post("/:handle", async (req, res) => {
   try {
-    // Validation
+    // validation
     const handle = req.params.handle;
     const { email, password } = req.body;
 
@@ -49,8 +49,8 @@ router.post("/:handle", async (req, res) => {
     // send the token in a HTTP-only cookie
     res
       .cookie("token", token, {
-        // httpOnly: true,
-        // secure: true,
+        httpOnly: true,
+        secure: true,
         sameSite: "none",
       })
       .send();

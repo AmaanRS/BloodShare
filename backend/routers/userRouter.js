@@ -14,7 +14,7 @@ router.get("/", auth, async (req, res) => {
 
 router.post("/donate", auth, async (req, res) => {
   try {
-    // Set The user ID to the authenticated user
+    // Set the user ID to the authenticated user
     req.body.userId = req.user;
 
     // Generate the current date and time
@@ -97,23 +97,14 @@ router.get("/requests", auth, async (req, res) => {
 
 router.put("/", auth, async (req, res) => {
   try {
-    // Check if the gender field is present in the request body
-    if ("gender" in req.body) {
-      return res.status(400).send("Gender cannot be changed.");
-    }
-
-    // Remove the gender field from the request body
-    delete req.body.gender;
-
-    // Update the user profile excluding the gender field
-    const updatedUser = await User.updateOne({ _id: req.user }, req.body);
-
-    // Check if the user was found and updated
-    if (updatedUser.nModified === 0) {
-      return res.status(404).send("User not found.");
-    }
-
-    res.status(200).send("User profile updated successfully.");
+    console.log(req.user);
+    User.updateOne({ _id: req.user }, req.body, (err, user) => {
+      if (err) {
+        res.send(404, "User not found");
+      } else {
+        res.send(200, "User updated");
+      }
+    });
   } catch (err) {
     console.error(err);
     res.status(500).send();

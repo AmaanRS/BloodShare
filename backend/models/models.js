@@ -23,7 +23,7 @@ const userSchema = new mongoose.Schema({
     type: String,
     required: true,
     enum: ["A+", "A-", "B+", "B-", "AB+", "AB-", "O+", "O-"],
-  }, // Ensure Blood group is one of the specified values
+  }, // Ensure blood group is one of the specified values
   email: {
     type: String,
     required: true,

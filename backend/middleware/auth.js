@@ -8,7 +8,7 @@ function auth(req, res, next) {
       return res.status(401).json({ errorMessage: "Unauthorized" });
     }
 
-    // Verify the Token and extract the user ID
+    // Verify the token and extract the user ID
     const verified = jwt.verify(token, process.env.JWT_SECRET);
     req.user = verified.user;
 

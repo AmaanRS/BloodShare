@@ -161,7 +161,7 @@ router.put("/requests", auth, async (req, res) => {
     const requestId = req.body.id;
     const status = req.body.status;
 
-    // update the status of the request
+    // Update the status of the request
     const updatedRequest = await Requests.updateOne(
       { _id: requestId },
       { status: status }
