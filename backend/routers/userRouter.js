@@ -14,7 +14,7 @@ router.get("/", auth, async (req, res) => {
 
 router.post("/donate", auth, async (req, res) => {
   try {
-    // Set the user ID to the authenticated user
+    // Set The user ID to the authenticated user
     req.body.userId = req.user;
 
     // Generate the current date and time
