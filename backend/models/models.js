@@ -17,29 +17,12 @@ const stock = {
 // Create schema for Users
 const userSchema = new mongoose.Schema({
   name: { type: String, required: true },
-  age: { type: Number, required: true, min: 18 }, // Ensure age is a number and at least 18 years old
-  gender: { type: String, required: true, enum: ["male", "female", "other"] }, // Ensure gender is one of the specified values
-  bloodGroup: {
-    type: String,
-    required: true,
-    enum: ["A+", "A-", "B+", "B-", "AB+", "AB-", "O+", "O-"],
-  }, // Ensure blood group is one of the specified values
-  email: {
-    type: String,
-    required: true,
-    unique: true,
-    trim: true,
-    lowercase: true,
-    match: /^\S+@\S+\.\S+$/,
-  }, // Ensure email is unique and matches the email format
-  phone: {
-    type: String,
-    required: true,
-    unique: true,
-    trim: true,
-    match: /^\d{10}$/,
-  }, // Ensure phone is unique and matches a 10-digit number format
-  password: { type: String, required: true, minlength: 8 }, // Ensure password is at least 8 characters long
+  age: { type: Number, required: true },
+  gender: { type: String, required: true },
+  bloodGroup: { type: String, enum: bloodGroups, required: true },
+  email: { type: String },
+  phone: { type: Number, unique: true, required: true },
+  password: { type: String, required: true },
   state: { type: String, required: true },
   district: { type: String, required: true },
   address: { type: String },
@@ -62,13 +45,13 @@ const bloodDonations = new mongoose.Schema({
     ref: "BloodBanks",
     required: true,
   },
-  units: { type: Number, required: true, min: 1 }, // Ensure units is a positive number
-  date: { type: Date, required: true, default: Date.now }, // Ensure date is a valid date format and is required
-  disease: { type: String, trim: true }, // Trim any leading or trailing spaces in the disease field
+  units: { type: Number, required: true },
+  date: { type: String, required: true },
+  disease: { type: String },
   status: {
     type: String,
     required: true,
-    enum: ["Pending", "Approved", "Denied", "Donated"], // Ensure status is one of the specified values
+    enum: ["Pending", "Approved", "Denied", "Donated"],
     default: "Pending",
   },
 });
@@ -91,15 +74,15 @@ const bloodRequests = new mongoose.Schema({
     required: true,
   },
   name: { type: String, required: true },
-  age: { type: Number, required: true, min: 1 }, // Ensure age is a positive number
-  gender: { type: String, required: true, enum: ["male", "female", "other"] }, // Ensure gender is one of the specified values
-  bloodGroup: { type: String, enum: bloodGroups, required: true }, // Ensure bloodGroup is one of the specified values
-  units: { type: Number, required: true, min: 1 }, // Ensure units is a positive number
-  date: { type: Date, required: true, default: Date.now }, // Ensure date is a valid date format and is required
-  reason: { type: String }, // Allow reason to be a string
+  age: { type: Number, required: true },
+  gender: { type: String, required: true },
+  bloodGroup: { type: String, enum: bloodGroups, required: true },
+  units: { type: Number, required: true },
+  date: { type: String, required: true },
+  reason: { type: String },
   status: {
     type: String,
-    enum: ["Pending", "Approved", "Denied", "Completed"], // Ensure status is one of the specified values
+    enum: ["Pending", "Approved", "Denied", "Completed"],
     default: "Pending",
   },
 });
@@ -113,25 +96,12 @@ const Requests = mongoose.model("Requests", bloodRequests);
 const bloodBankSchema = new mongoose.Schema({
   name: { type: String, required: true },
   hospital: { type: String, required: true },
-  contactPerson: { type: String, required: true }, // Ensure contactPerson is required
+  contactPerson: { type: String },
   category: { type: String, required: true },
-  website: { type: String, trim: true }, // Trim any leading or trailing spaces in the website field
-  phone: {
-    type: String,
-    required: true,
-    unique: true,
-    trim: true,
-    match: /^\d{10}$/,
-  }, // Ensure phone is unique and matches a 10-digit number format
-  email: {
-    type: String,
-    required: true,
-    unique: true,
-    trim: true,
-    lowercase: true,
-    match: /^\S+@\S+\.\S+$/,
-  }, // Ensure email is unique and matches the email format
-  password: { type: String, required: true, minlength: 8 }, // Ensure password is at least 8 characters long
+  website: { type: String },
+  phone: { type: Number, required: true },
+  email: { type: String, required: true },
+  password: { type: String, required: true },
   state: { type: String, required: true },
   district: { type: String, required: true },
   address: { type: String, required: true },
@@ -158,6 +128,7 @@ const bloodBankSchema = new mongoose.Schema({
     "O-": { type: Number, default: 0 },
   },
 });
+
 // Create model for Blood Banks
 const BloodBank = mongoose.model("BloodBanks", bloodBankSchema);
 
@@ -168,20 +139,16 @@ const campSchema = new mongoose.Schema({
   address: { type: String, required: true },
   state: { type: String, required: true },
   district: { type: String, required: true },
-  bankId: {
-    type: mongoose.Schema.Types.ObjectId,
-    ref: "BloodBanks",
-    required: true,
-  }, // Ensure bankId is required
+  bankId: { type: mongoose.Schema.Types.ObjectId, ref: "BloodBanks" },
   organizer: { type: String, required: true },
-  contact: { type: String, required: true, trim: true, match: /^\d{10}$/ }, // Ensure contact is required and matches a 10-digit number format
-  startTime: { type: String, required: true }, // Ensure startTime is required
-  endTime: { type: String, required: true }, // Ensure endTime is required
+  contact: { type: Number, required: true },
+  startTime: { type: String, required: true },
+  endTime: { type: String, required: true },
   donors: [
     {
-      _id: { type: mongoose.Schema.Types.ObjectId, ref: "Users", unique: true }, // Ensure _id is unique
-      units: { type: Number, required: true, min: 0, default: 0 }, // Ensure units is a number and is at least 0
-      status: { type: Number, enum: [0, 1], default: 0 }, // Ensure status is either 0 or 1
+      _id: { type: mongoose.Schema.Types.ObjectId, ref: "Users", unique: true },
+      units: { type: Number, required: true, default: 0 },
+      status: { type: Number, enum: [0, 1], default: 0 },
     },
   ],
 });
