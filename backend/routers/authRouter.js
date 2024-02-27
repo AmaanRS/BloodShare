@@ -196,8 +196,8 @@ var Nodemailer_Message = async (email) => {
     const info = await transporter.sendMail({
       from: process.env.SENDER_EMAIL, // sender address
       to: `${email}`, // list of receivers
-      subject: "OTP for CampusConnect Email", // Subject line
-      text: `Here is Your OTP for Verifying your CampusConnect Email ${otp}`,
+      subject: "OTP for BloodShare Email", // Subject line
+      text: `Here is Your OTP for Verifying your BloodShare Email ${otp}`,
     });
     return { message: "OTP sent Successfully", success: true };
   } catch (error) {
@@ -234,17 +234,16 @@ router.post("/verify_otp/check",async (req,res)=>{
         httpOnly: true,
         secure: true,
         sameSite: "none",
-      })
-      .send("Signed up successfully");
+      }).status(200).send("Signed up successfully");
 
     }else{
       console.log(UserEnteredOtp)
-      res.json({message:"Otp Match Unsuccessfull",success:false})
+      res.status(404).json({message:"Otp Match Unsuccessfull",success:false})
     }
     
   } catch (error) {
     console.log(error)
-    res.json({message:"Otp Match Unsuccessfull",success:false})
+    res.status(404).json({message:error + "       Otp Match Unsuccessfull",success:false})
   }
 })
 
