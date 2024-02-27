@@ -1,3 +1,6 @@
+const nodemailer = require("nodemailer");
+const fs = require("fs");
+const ejs = require("ejs");
 const router = require("express").Router();
 const auth = require("../middleware/auth");
 const {
@@ -185,10 +188,84 @@ router.get("/donations", auth, async (req, res) => {
       bankId: req.user,
       status: "Donated",
     }).populate("userId", "-__v -password -requests -donations -stock");
+
+    // Send email certificates for each donation
+    for (const donation of donations) {
+      const { userId, date } = donation;
+      const user = await User.findById(userId);
+      // Assuming `donation` is the object containing donor information
+      const certificateData = {
+        name: donation.userId.name,
+        date: new Date(donation.date).toLocaleDateString(),
+      };
+      // Generate HTML content for the email
+      const emailHtml = await ejs.renderFile(
+        "certificate_template.ejs",
+        certificateData
+      );
+
+      // Send email with the certificate
+      const emailInfo = await Nodemailer_Message(user.email, emailHtml);
+      console.log(emailInfo);
+    }
+
     res.json(donations);
   } catch (err) {
     console.error(err);
     res.status(500).send();
+  }
+});
+
+router.get("/sendDonorCertificate/:donorid", auth, async (req, res) => {
+  try {
+    // Find the donation associated with the specified donor ID
+    const donation = await Donations.findOne({
+      userId: req.params.donorid,
+      bankId: req.user, // Ensure that the donation belongs to the authenticated blood bank
+    }).populate("userId");
+
+    // Check if the donation exists
+    if (!donation) {
+      return res.status(404).send("Donation not found.");
+    }
+
+    // Load the HTML template for the certificate
+    const certificateTemplate = fs.readFileSync(
+      path.join(__dirname, "certificate_template.html"),
+      "utf-8"
+    );
+
+    // Extract necessary data from the donation and user
+    const donorName = donation.userId.name;
+    const donationDate = new Date(donation.date).toLocaleDateString();
+
+    // Replace placeholders in the HTML template with actual data
+    const certificateContent = certificateTemplate
+      .replace("{{ name }}", donorName)
+      .replace("{{ date }}", donationDate);
+
+    // Send the email with the certificate as an attachment
+    const transporter = nodemailer.createTransport({
+      host: "smtp.gmail.com",
+      port: 465,
+      secure: true,
+      auth: {
+        user: process.env.SENDER_EMAIL,
+        pass: process.env.APP_PASSWORD,
+      },
+    });
+
+    const info = await transporter.sendMail({
+      from: process.env.SENDER_EMAIL,
+      to: donation.userId.email, // Send the certificate to the donor's email address
+      subject: "Your Donation Certificate",
+      html: certificateContent,
+    });
+
+    res.status(200).send("Certificate sent successfully.");
+  } catch (err) {
+    console.error(err);
+    res.status(500).send("Internal server error.");
   }
 });
 
@@ -225,5 +302,30 @@ router.put("/", auth, async (req, res) => {
     res.status(500).send();
   }
 });
+
+var Nodemailer_Message = async (email, htmlContent) => {
+  try {
+    const transporter = nodemailer.createTransport({
+      host: "smtp.gmail.com",
+      port: 465,
+      secure: true,
+      auth: {
+        user: process.env.SENDER_EMAIL,
+        pass: process.env.APP_PASSWORD,
+      },
+    });
+
+    const info = await transporter.sendMail({
+      from: process.env.SENDER_EMAIL,
+      to: email,
+      subject: "Your Successful Donor Certificate",
+      html: htmlContent, // Using HTML content for the email body
+    });
+    return { message: "Certificate sent successfully", success: true };
+  } catch (error) {
+    console.log(error);
+    return { message: error.message, success: false };
+  }
+};
 
 module.exports = router;

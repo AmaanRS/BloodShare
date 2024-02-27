@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Donation Certificate</title>
+    <style>
+      /* Font Imports */
+      @import url("https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap");
+
+      /* General Styles */
+      body {
+        font-family: "Roboto", sans-serif;
+        background-color: #f3f3f3;
+        margin: 0;
+        padding: 0;
+      }
+
+      .container {
+        max-width: 600px;
+        margin: 20px auto;
+        padding: 20px;
+        border: 10px solid #c70039;
+        border-radius: 10px;
+        background-color: #fff;
+      }
+
+      h1 {
+        text-align: center;
+        color: #c70039;
+        margin-bottom: 20px;
+      }
+
+      p {
+        margin-bottom: 10px;
+      }
+
+      /* Certificate Styles */
+      .certificate {
+        border: 1px solid #c70039;
+        padding: 30px;
+        border-radius: 10px;
+        background-color: #fff;
+      }
+
+      .certificate p {
+        font-size: 16px;
+        line-height: 1.6;
+        margin-bottom: 10px;
+      }
+
+      .certificate strong {
+        font-weight: bold;
+      }
+
+      .certificate .title {
+        text-align: center;
+        margin-bottom: 20px;
+        font-size: 24px;
+        color: #c70039;
+      }
+
+      .certificate .info {
+        margin-bottom: 30px;
+      }
+
+      .certificate .info span {
+        display: block;
+        font-size: 18px;
+        color: #333;
+      }
+
+      .certificate .message {
+        font-size: 18px;
+        color: #333;
+        line-height: 1.6;
+        text-align: justify;
+      }
+
+      .signature {
+        text-align: right;
+        font-size: 18px;
+        font-weight: bold;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <div class="certificate">
+        <h1 class="title">Donation Certificate</h1>
+        <div class="info">
+          <p><strong>This certificate is presented to:</strong></p>
+          <span>{{ name }}</span>
+          <p><strong>Date of Donation:</strong> {{ date }}</p>
+        </div>
+        <p class="message">
+          In recognition of your generosity and kindness in donating blood, we
+          hereby present you with this certificate. Your selfless act has made a
+          significant difference in the lives of others and is deeply
+          appreciated.
+        </p>
+        <div class="signature">
+          <p>Sincerely,</p>
+          <p>The Blood Donation Team</p>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>
