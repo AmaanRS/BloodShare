@@ -4,7 +4,6 @@ function auth(req, res, next) {
   try {
     // Check if the token exists in the request cookies
     const token = req.cookies.token;
-    console.log(token);
     if (!token) {
       return res.status(401).json({ errorMessage: "Unauthorized" });
     }
@@ -12,6 +11,7 @@ function auth(req, res, next) {
     // Verify the token and extract the user ID
     const verified = jwt.verify(token, process.env.JWT_SECRET);
     req.user = verified.user;
+    req.v = verified;
 
     // Call the next middleware or route handler
     next();
