@@ -196,8 +196,8 @@ var Nodemailer_Message = async (email) => {
     const info = await transporter.sendMail({
       from: process.env.SENDER_EMAIL, // sender address
       to: `${email}`, // list of receivers
-      subject: "OTP for CampusConnect Email", // Subject line
-      text: `Here is Your OTP for Verifying your CampusConnect Email ${otp}`,
+      subject: "OTP for BloodShare Email", // Subject line
+      text: `Here is Your OTP for Verifying your BloodShare Email ${otp}`,
     });
     return { message: "OTP sent Successfully", success: true };
   } catch (error) {
