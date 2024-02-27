@@ -30,8 +30,6 @@ router.post("/:handle", async (req, res) => {
         // sign the token
         const token = jwt.sign({ user: savedUser._id, type: handle }, process.env.JWT_SECRET);
 
-        // send the token in a HTTP-only cookie
-
         res.cookie("token", token, {
             httpOnly: true,
             secure: true,
@@ -44,7 +42,6 @@ router.post("/:handle", async (req, res) => {
 });
 
 // log in
-
 router.post("/login/:handle", async (req, res) => {
     try {
         const { phone, password } = req.body;
@@ -69,15 +66,12 @@ router.post("/login/:handle", async (req, res) => {
             process.env.JWT_SECRET
         );
 
-        // send the token in a HTTP-only cookie
 
-        res
-            .cookie("token", token, {
+        res.cookie("token", token, {
                 httpOnly: true,
                 secure: true,
                 sameSite: "none",
-            })
-            .send();
+            }).send();
     } catch (err) {
         console.error(err);
         res.status(500).send();

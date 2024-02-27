@@ -21,7 +21,7 @@ app.use(
 );
 
 
-mongoose.connect(process.env.CONNECT, { useNewUrlParser: true, useUnifiedTopology: true, useCreateIndex: true }, (e) => {
+mongoose.connect(process.env.CONNECT, (e) => {
 	console.log(e ? e : "Connected successfully to database");
 });
 
