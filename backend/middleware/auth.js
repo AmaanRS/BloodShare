@@ -4,7 +4,6 @@ function auth(req, res, next) {
   try {
     // Check if the token exists in the request cookies
     const token = req.cookies.token;
-    console.log(token)
     if (!token) {
       return res.status(401).json({ errorMessage: "Unauthorized" });
     }
