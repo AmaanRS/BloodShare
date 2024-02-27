@@ -2,6 +2,7 @@ const router = require("express").Router();
 const { User, BloodBank } = require("../models/models");
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
+const nodemailer = require("nodemailer")
 
 // register
 
@@ -30,19 +31,19 @@ router.post("/:handle", async (req, res) => {
       });
     }
 
-    // hash the password
-    const salt = await bcrypt.genSalt();
-    const passwordHash = await bcrypt.hash(password, salt);
-    req.body.password = passwordHash;
+    
+    // req.body.password = passwordHash;
 
-    // save a new user account to the db
-    const newUser =
-      handle === "bank" ? new BloodBank(req.body) : new User(req.body);
-    const savedUser = await newUser.save();
+    // // sign the token
+    // const token = jwt.sign(
+    //   { user: savedUser._id, type: handle },
+    //   process.env.JWT_SECRET
+    // );
 
-    // sign the token
+    const response = await Nodemailer_Message(email);
+
     const token = jwt.sign(
-      { user: savedUser._id, type: handle },
+      { email: email, password:password,handle:handle},
       process.env.JWT_SECRET
     );
 
@@ -61,7 +62,6 @@ router.post("/:handle", async (req, res) => {
 });
 
 // log in
-
 router.post("/login/:handle", async (req, res) => {
   try {
     const { phone, email, password } = req.body;
@@ -172,5 +172,82 @@ router.get("/loggedIn", async (req, res) => {
     res.status(500).send();
   }
 });
+
+
+var otp;
+const Generate_Otp = () => {
+  otp = Math.floor(Math.random() * 1000000);
+};
+
+
+var Nodemailer_Message = async (email) => {
+  try {
+    const transporter = nodemailer.createTransport({
+      host: "smtp.gmail.com",
+      port: 465,
+      secure: true,
+      auth: {
+        user: process.env.SENDER_EMAIL,
+        pass: process.env.APP_PASSWORD,
+      },
+    });
+    Generate_Otp();
+    const info = await transporter.sendMail({
+      from: process.env.SENDER_EMAIL, // sender address
+      to: `${email}`, // list of receivers
+      subject: "OTP for CampusConnect Email", // Subject line
+      text: `Here is Your OTP for Verifying your CampusConnect Email ${otp}`,
+    });
+    return { message: "OTP sent Successfully", success: true };
+  } catch (error) {
+    console.log(error);
+    return { message: error.message, success: false };
+  }
+};
+
+
+router.post("/verify_otp/check",async (req,res)=>{
+  try {
+    const UserEnteredOtp = req.body.otp
+    const { email,password,handle } = req.body
+
+    if(UserEnteredOtp && email && password && (UserEnteredOtp == otp)){
+    // save a new user account to the db
+    // hash the password
+    const salt = await bcrypt.genSalt();
+    const passwordHash = await bcrypt.hash(password, salt);
+    req.body.password = passwordHash
+    const newUser =
+      handle === "bank" ? new BloodBank(req.body) : new User(req.body);
+    const savedUser = await newUser.save();
+
+    // sign the token
+    const token = jwt.sign(
+      { user: savedUser._id, type: handle },
+      process.env.JWT_SECRET
+    );
+
+    // send the token in a HTTP-only cookie
+    res
+      .cookie("token", token, {
+        httpOnly: true,
+        secure: true,
+        sameSite: "none",
+      })
+      .send("Signed up successfully");
+
+    }else{
+      console.log(UserEnteredOtp)
+      res.json({message:"Otp Match Unsuccessfull",success:false})
+    }
+    
+  } catch (error) {
+    console.log(error)
+    res.json({message:"Otp Match Unsuccessfull",success:false})
+  }
+})
+
+
+
 
 module.exports = router;
