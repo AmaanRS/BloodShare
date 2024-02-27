@@ -181,11 +181,11 @@ router.put("/requests", auth, async (req, res) => {
 router.get("/donations", auth, async (req, res) => {
   try {
     // Find donations associated with the authenticated blood bank and populate the user details
-    const data = await Donations.find({ bankId: req.user }).populate(
-      "userId",
-      "-__v -password -requests -donations -stock"
-    );
-    res.json(data);
+    const donations = await Donations.find({
+      bankId: req.user,
+      status: "Donated",
+    }).populate("userId", "-__v -password -requests -donations -stock");
+    res.json(donations);
   } catch (err) {
     console.error(err);
     res.status(500).send();

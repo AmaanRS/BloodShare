@@ -110,6 +110,7 @@ router.post("/login/:handle", async (req, res) => {
       },
       process.env.JWT_SECRET
     );
+    // console.log(token);
 
     // send the token in a HTTP-only cookie
     res
