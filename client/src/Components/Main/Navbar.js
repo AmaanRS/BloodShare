@@ -70,7 +70,7 @@ const Navbar = (props) => {
                     title="Looking For Blood"
                     children={[
                       "Patient Login/Register",
-                      // "Blood Bank Directory",
+                      "Blood Bank Directory",
                     ]}
                     links={["/register/patient", "/bloodDirect"]}
                   ></DropDown>
@@ -78,12 +78,12 @@ const Navbar = (props) => {
                     title="Want To Donate Blood"
                     children={[
                       "Donor Login/Register",
-                      // "Blood Donation Camps",
+                      "Blood Donation Camps",
                       "About Blood Donation",
                     ]}
                     links={[
                       "/register/donor",
-                      // "/bloodCamps",
+                      "/bloodCamps",
                       "/aboutBloodDonation",
                     ]}
                   ></DropDown>
@@ -120,7 +120,7 @@ const Navbar = (props) => {
         </div>
       </nav>
       <Outlet />
-      <section className="footer mt-20">
+      {/* <section className="footer mt-20">
         <footer className="relative bg-gray-300 pt-8 pb-6">
           <div
             className="bottom-auto top-0 left-0 right-0 w-full absolute pointer-events-none overflow-hidden -mt-20"
@@ -238,7 +238,7 @@ const Navbar = (props) => {
             <hr className="my-6 border-gray-400" />
           </div>
         </footer>
-      </section>
+      </section> */}
     </>
   );
 };

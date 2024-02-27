@@ -1,3 +1,4 @@
+import BloodDonationBanner from "../../assets/BloodDonateBanner.png";
 import donationFact from "../../assets/donationFact.webp";
 import g1 from "../../assets/donation/g1.jpg";
 import g2 from "../../assets/donation/g2.jpg";
@@ -22,10 +23,7 @@ const Home = () => {
   ];
   return (
     <div className="dark:text-white-900">
-      <img
-        src={"https://www.bloodlinks.in/uploads/app/Banner-1-Donate-Blood.png"}
-        alt=""
-      />
+      <img src={BloodDonationBanner} alt="" />
 
       {/* <div className="grid grid-cols-2 place-items-center mt-6 px-52">
         <div>
@@ -53,7 +51,7 @@ const Home = () => {
             </code>
           </p>
         </div>
-        <div>
+        {/* <div>
           <table className="w-max" cellPadding={5}>
             <tr>
               <td
@@ -78,7 +76,7 @@ const Home = () => {
               );
             })}
           </table>
-        </div>
+        </div> */}
       </div>
       <p className="text-xl underline font-bold text-blood text-center mt-5 mb-5">
         Blood Donation Process
