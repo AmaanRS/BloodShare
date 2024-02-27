@@ -211,7 +211,7 @@ router.get("/sendDonorCertificate/:donorid", auth, async (req, res) => {
 
     // Load the HTML template for the certificate
     const certificateTemplate = fs.readFileSync(
-      path.join(__dirname, "/routers/certificate_template.ejs"),
+      path.join(__dirname, "/certificate_template.ejs"),
       "utf-8"
     );
 
