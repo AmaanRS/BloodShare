@@ -233,17 +233,16 @@ router.post("/verify_otp/check",async (req,res)=>{
         httpOnly: true,
         secure: true,
         sameSite: "none",
-      })
-      .send("Signed up successfully");
+      }).status(200).send("Signed up successfully");
 
     }else{
       console.log(UserEnteredOtp)
-      res.json({message:"Otp Match Unsuccessfull",success:false})
+      res.status(404).json({message:"Otp Match Unsuccessfull",success:false})
     }
     
   } catch (error) {
     console.log(error)
-    res.json({message:"Otp Match Unsuccessfull",success:false})
+    res.status(404).json({message:"Otp Match Unsuccessfull",success:false})
   }
 })
 
