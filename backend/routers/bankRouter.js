@@ -3,6 +3,7 @@ const fs = require("fs");
 const ejs = require("ejs");
 const router = require("express").Router();
 const auth = require("../middleware/auth");
+const path = require("path");
 const {
   User,
   BloodBank,
@@ -210,7 +211,7 @@ router.get("/sendDonorCertificate/:donorid", auth, async (req, res) => {
 
     // Load the HTML template for the certificate
     const certificateTemplate = fs.readFileSync(
-      "./certificate_template.ejs",
+      path.join(__dirname, "/routers/certificate_template.ejs"),
       "utf-8"
     );
 
