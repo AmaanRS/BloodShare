@@ -188,27 +188,6 @@ router.get("/donations", auth, async (req, res) => {
       bankId: req.user,
       status: "Donated",
     }).populate("userId", "-__v -password -requests -donations -stock");
-
-    // Send email certificates for each donation
-    for (const donation of donations) {
-      const { userId, date } = donation;
-      const user = await User.findById(userId);
-      // Assuming `donation` is the object containing donor information
-      const certificateData = {
-        name: donation.userId.name,
-        date: new Date(donation.date).toLocaleDateString(),
-      };
-      // Generate HTML content for the email
-      const emailHtml = await ejs.renderFile(
-        "certificate_template.ejs",
-        certificateData
-      );
-
-      // Send email with the certificate
-      const emailInfo = await Nodemailer_Message(user.email, emailHtml);
-      console.log(emailInfo);
-    }
-
     res.json(donations);
   } catch (err) {
     console.error(err);
@@ -231,7 +210,7 @@ router.get("/sendDonorCertificate/:donorid", auth, async (req, res) => {
 
     // Load the HTML template for the certificate
     const certificateTemplate = fs.readFileSync(
-      path.join(__dirname, "../routers/certificate_template.ejs"),
+      path.join(__dirname, "/routers/certificate_template.ejs"),
       "utf-8"
     );
 
