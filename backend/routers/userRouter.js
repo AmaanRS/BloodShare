@@ -97,14 +97,23 @@ router.get("/requests", auth, async (req, res) => {
 
 router.put("/", auth, async (req, res) => {
   try {
-    console.log(req.user);
-    User.updateOne({ _id: req.user }, req.body, (err, user) => {
-      if (err) {
-        res.send(404, "User not found");
-      } else {
-        res.send(200, "User updated");
-      }
-    });
+    // Check if the gender field is present in the request body
+    if ("gender" in req.body) {
+      return res.status(400).send("Gender cannot be changed.");
+    }
+
+    // Remove the gender field from the request body
+    delete req.body.gender;
+
+    // Update the user profile excluding the gender field
+    const updatedUser = await User.updateOne({ _id: req.user }, req.body);
+
+    // Check if the user was found and updated
+    if (updatedUser.nModified === 0) {
+      return res.status(404).send("User not found.");
+    }
+
+    res.status(200).send("User profile updated successfully.");
   } catch (err) {
     console.error(err);
     res.status(500).send();
