@@ -243,7 +243,7 @@ router.post("/verify_otp/check",async (req,res)=>{
     
   } catch (error) {
     console.log(error)
-    res.status(404).json({message:"Otp Match Unsuccessfull",success:false})
+    res.status(404).json({message:error + "       Otp Match Unsuccessfull",success:false})
   }
 })
 
