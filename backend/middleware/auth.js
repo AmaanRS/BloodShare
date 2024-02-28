@@ -11,6 +11,7 @@ function auth(req, res, next) {
     // Verify the token and extract the user ID
     const verified = jwt.verify(token, process.env.JWT_SECRET);
     req.user = verified.user;
+    req.v = verified;
 
     // Call the next middleware or route handler
     next();
