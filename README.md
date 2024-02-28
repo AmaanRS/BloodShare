@@ -44,7 +44,7 @@
 <p align="justify">
   Secure and user-friendly login system for donors, allowing them to access their accounts and manage their profile and donation history.
 </p>
-<img src="(https://private-user-images.githubusercontent.com/91262696/308409430-3f42e6d8-44a6-4450-a527-04aa6589c142.jpeg?jwt=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJnaXRodWIuY29tIiwiYXVkIjoicmF3LmdpdGh1YnVzZXJjb250ZW50LmNvbSIsImtleSI6ImtleTUiLCJleHAiOjE3MDkwOTE2NzgsIm5iZiI6MTcwOTA5MTM3OCwicGF0aCI6Ii85MTI2MjY5Ni8zMDg0MDk0MzAtM2Y0MmU2ZDgtNDRhNi00NDUwLWE1MjctMDRhYTY1ODljMTQyLmpwZWc_WC1BbXotQWxnb3JpdGhtPUFXUzQtSE1BQy1TSEEyNTYmWC1BbXotQ3JlZGVudGlhbD1BS0lBVkNPRFlMU0E1M1BRSzRaQSUyRjIwMjQwMjI4JTJGdXMtZWFzdC0xJTJGczMlMkZhd3M0X3JlcXVlc3QmWC1BbXotRGF0ZT0yMDI0MDIyOFQwMzM2MThaJlgtQW16LUV4cGlyZXM9MzAwJlgtQW16LVNpZ25hdHVyZT1kNjBmYjhhNmFlN2FiNzFmZGUxYzU3ZTJjOGRmOTNmNGQ2ZmI4MWRjOGJmNGY4ZjM3MmVkN2U4ZTE0NzVmY2JmJlgtQW16LVNpZ25lZEhlYWRlcnM9aG9zdCZhY3Rvcl9pZD0wJmtleV9pZD0wJnJlcG9faWQ9MCJ9.OvuUU6MMBmYIfZfFWGMJncI6OweqvIVu32sBFdknplo)" alt="User/Donor Login" align="center" />
+<img src="/images/WhatsApp Image 2024-02-28 at 9.02.50 AM.jpeg" alt="User/Donor Login" align="center" />
 
 ### Email OTP Based Authentication
 <p align="justify">
