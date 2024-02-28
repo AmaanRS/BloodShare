@@ -44,7 +44,9 @@
 <p align="justify">
   Secure and user-friendly login system for donors, allowing them to access their accounts and manage their profile and donation history.
 </p>
-<img src="/images/WhatsApp Image 2024-02-28 at 9.02.50 AM.jpeg" alt="User/Donor Login" align="center" />
+<img src="/images/Patient1.jpeg" alt="User/Donor Login" align="center" />
+<img src="/images/Patient2.jpeg" alt="User/Donor Login" align="center" />
+
 
 ### Email OTP Based Authentication
 <p align="justify">
@@ -62,13 +64,13 @@
 <p align="justify">
   Showcase upcoming blood donation camps and availability of blood across different regions of the country, helping donors find convenient locations to donate.
 </p>
-<img src="path_to_image" alt="Blood Donation Camps and Availability" align="center" />
+<img src="/images/Search.jpeg" alt="Blood Donation Camps and Availability" align="center" />
 
 ### Multi-Linguistic Language Support
 <p align="justify">
   Support for multiple languages to cater to a diverse user base, ensuring accessibility and inclusivity for donors and recipients from different linguistic backgrounds.
 </p>
-<img src="path_to_image" alt="Multi-Linguistic Language Support" align="center" />
+<img src="/images/LandingPage.jpeg" alt="Multi-Linguistic Language Support" align="center" />
 
 ### Attractive UI
 <p align="justify">
